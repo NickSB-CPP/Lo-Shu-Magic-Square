@@ -59,3 +59,34 @@ void printArray(int array[3][3]) //printing function for multi-dimensional array
     }
 }
 
+int main(){ 
+    int loShu[3][3] = { {4, 9, 2}, {3, 5, 7}, {8, 1, 6} };
+    int notLoShu[3][3] = { {1, 2, 3}, {4, 5, 6}, {7, 8, 9} };
+    int randomLoShu[3][3];
+    printf("\nChecking if 'notLoShu' is magic square array.\n");
+    printArray(notLoShu);
+    printArray(loShu);
+    printf("\n");
+
+    int attempts = 0;
+    do {
+        attempts++;
+        int nums[9] = {0}; // Array tracks used numbers
+
+        // Populates array with random numbers from 1 to 9 w/o used numbers
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                int num;
+                do {
+                    num = rand() % 9 + 1;
+                } while (nums[num - 1] != 0); // no repetition of numbers
+                nums[num - 1] = 1; // Marks number as used
+                randomLoShu[i][j] = num;
+            }
+        }
+    } while (!isMagicSquare(randomLoShu));
+    printArray(randomLoShu);
+    printf("\n");
+    printf("Attempts: %d", attempts);
+    return 0;
+}
